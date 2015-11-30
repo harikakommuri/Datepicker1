@@ -1,0 +1,47 @@
+.change
+{
+  background: #123;
+  border-radius: 50%;
+  cursor: pointer;
+  color: white;
+  display: inline;
+}
+#calenderdiv
+{
+  position: relative;
+  margin: 0 auto;
+  width: 250px;
+}
+#calenderheader
+{
+  width: 100%;
+  background: #eee;
+}
+#calenderheader td
+{
+  cursor: pointer;
+  text-align: center;
+}
+#caption
+{
+  background: #ffb84d;
+  border-radius: 5%;
+  font-weight: bold;
+  height: 25px;
+}
+#previous
+{
+  left: 530px;
+  position: fixed;
+  top: 20px;
+}
+#next
+{
+  left: 776px;
+  position: fixed;
+  top: 20px;
+}
+#selectdate
+{
+  width: 100%;
+}
