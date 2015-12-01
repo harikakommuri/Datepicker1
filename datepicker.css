@@ -8,6 +8,7 @@
 }
 #calenderdiv
 {
+  backface-visibility: visible;
   position: relative;
   margin: 0 auto;
   width: 250px;

@@ -1,4 +1,4 @@
-  $(document).ready(function(){
+  $(document).ready(function() {
   var date = new Date();
   var crntmonth = date.getMonth();
   var year = date.getFullYear();
@@ -36,17 +36,17 @@
     displaydates();
   }
   function displaydates() {
-    var td,tr;
+    var td,tr,cellNo;
     var year = date.getFullYear();
     var month = date.getMonth();
     lp = year % 4 === 0?(year % 100 === 0 ? false : true) : false;
     var noofdays = [31, lp === true?29:28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     var tbody = document.getElementById("tbody");
-    var firstday = new Date(year,month,1); //to get first day of the month
+    var firstday = new Date(year,month,1);
     var colindex = firstday.getDay();
-    var k = 1;
+    var k = 0;
     tr = document.createElement("tr");
-    for (var i = 0; i < noofdays[date.getMonth()]+firstday.getDay(); i++) {
+    for (var i = 0; i < noofdays[date.getMonth()] + firstday.getDay(); i++) {
       if (i < firstday.getDay()) {
         td = document.createElement("td");
         td.innerHTML = "";
@@ -57,26 +57,34 @@
         ++colindex;
         td = document.createElement("td");
         td.className = "dates";
-        td.innerHTML = k++;
+        td.innerHTML = ++k;
+        td.id = td.innerHTML;
         tr.appendChild(td);
         tbody.appendChild(tr);
-        }
+        cellNo = document.getElementById(k);
+        cellNo.setAttribute("data-ColValue",k);
+        cellNo.addEventListener("click", function() { showdate(cellNo.getAttribute("data-ColValue")); });
+      }
         else {
           tr = document.createElement("tr");
           colindex++;
           td = document.createElement("td");
-          td.innerHTML = k++;
+          td.innerHTML = ++k;
+          td.id = td.innerHTML;
           tr.appendChild(td);
           tbody.appendChild(tr);
+          cellNo = document.getElementById(k);
+          cellNo.setAttribute("data-ColValue",k);
+          cellNo.addEventListener("click", function() { showdate(cellNo.getAttribute("data-ColValue")); });
         }
     }
     var tableid = document.getElementById("calenderheader");
     var rowlength = tableid.rows.length;
+    k = 1;
     for (var m = 0; m < rowlength; m++) {
       for (var j = 0; j < weekdays.length; j++) {
         var crntdate = tableid.rows[m].cells[j].innerHTML;
-        tableid.rows[m].cells[j].addEventListener("click",function() { showdate(crntdate); });
-        if (date.getDate() === parseInt(crntdate)) {
+        if (date.getDate() === parseInt(tableid.rows[m].cells[j].innerHTML)) {
           tableid.rows[m].cells[j].style.background = "#ffb84d";
         }
       }
@@ -107,8 +115,8 @@
     document.getElementById("previous").addEventListener("click",previousmonth);
     document.getElementById("next").addEventListener("click",nextmonth);
   }
-  function showdate(crntdate) {
+  function showdate(colno) {
     var textbox = document.getElementById("selectdate");
-    textbox.value = date.getFullYear() + "," + months[date.getMonth()] + "," + crntdate;
+    textbox.value = date.getFullYear() + "," + months[date.getMonth()] + "," + colno;
   }
 });
