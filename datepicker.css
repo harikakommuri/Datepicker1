@@ -1,14 +1,13 @@
 .change
 {
   background: #123;
-  border-radius: 50%;
+  border-radius: 100%;
   cursor: pointer;
   color: white;
   display: inline;
 }
 #calenderdiv
 {
-  backface-visibility: visible;
   position: relative;
   margin: 0 auto;
   width: 250px;
@@ -28,19 +27,19 @@
   background: #ffb84d;
   border-radius: 5%;
   font-weight: bold;
-  height: 25px;
+  height: 30px;
 }
 #previous
 {
-  left: 530px;
-  position: fixed;
-  top: 20px;
+  left: -45px;
+  position: relative;
+  top: 5px;
 }
 #next
 {
-  left: 776px;
-  position: fixed;
-  top: 20px;
+  left: 45px;
+  position: relative;
+  top: 5px;
 }
 #selectdate
 {

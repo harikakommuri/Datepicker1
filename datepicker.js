@@ -4,11 +4,17 @@
   var year = date.getFullYear();
   var mnth = crntmonth;
   var weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  var noofdays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
   var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  var lable = document.createElement("lable");
+  lable.id = "datelable";
+  lable.innerHTML = "Click to enter date";
   var textbox = document.createElement("input");
   textbox.type = "text";
   textbox.id = "selectdate";
   var calenderdiv = document.getElementById("calenderdiv");
+  calenderdiv.setAttribute("draggable","true");
+  calenderdiv.appendChild(lable);
   calenderdiv.appendChild(textbox);
   document.getElementById("selectdate").addEventListener("click",datepicker);
   function datepicker() {
@@ -33,18 +39,19 @@
     document.getElementById("calenderheader").border.collapse = "collapse";
     document.getElementById("previous").addEventListener("click",previousmonth);
     document.getElementById("next").addEventListener("click",nextmonth);
+    document.getElementById("selectdate").disabled = "true";
     displaydates();
   }
   function displaydates() {
     var td,tr,cellNo;
     var year = date.getFullYear();
     var month = date.getMonth();
+    var k = 0;
     lp = year % 4 === 0?(year % 100 === 0 ? false : true) : false;
     var noofdays = [31, lp === true?29:28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
     var tbody = document.getElementById("tbody");
     var firstday = new Date(year,month,1);
     var colindex = firstday.getDay();
-    var k = 0;
     tr = document.createElement("tr");
     for (var i = 0; i < noofdays[date.getMonth()] + firstday.getDay(); i++) {
       if (i < firstday.getDay()) {
@@ -57,25 +64,26 @@
         ++colindex;
         td = document.createElement("td");
         td.className = "dates";
-        td.innerHTML = ++k;
+        k = ++k;
+        td.innerHTML = k;
         td.id = td.innerHTML;
         tr.appendChild(td);
         tbody.appendChild(tr);
-        cellNo = document.getElementById(k);
-        cellNo.setAttribute("data-ColValue",k);
-        cellNo.addEventListener("click", function() { showdate(cellNo.getAttribute("data-ColValue")); });
+        document.getElementById(k).setAttribute("data-ColValue",k);
+        showdate(k);
       }
         else {
           tr = document.createElement("tr");
           colindex++;
           td = document.createElement("td");
-          td.innerHTML = ++k;
+          td.className = "dates";
+          k = ++k;
+          td.innerHTML = k;
           td.id = td.innerHTML;
           tr.appendChild(td);
           tbody.appendChild(tr);
-          cellNo = document.getElementById(k);
-          cellNo.setAttribute("data-ColValue",k);
-          cellNo.addEventListener("click", function() { showdate(cellNo.getAttribute("data-ColValue")); });
+          document.getElementById(k).setAttribute("data-ColValue",k);
+          showdate(k); //to display clicked date in textbox
         }
     }
     var tableid = document.getElementById("calenderheader");
@@ -83,7 +91,6 @@
     k = 1;
     for (var m = 0; m < rowlength; m++) {
       for (var j = 0; j < weekdays.length; j++) {
-        var crntdate = tableid.rows[m].cells[j].innerHTML;
         if (date.getDate() === parseInt(tableid.rows[m].cells[j].innerHTML)) {
           tableid.rows[m].cells[j].style.background = "#ffb84d";
         }
@@ -116,7 +123,9 @@
     document.getElementById("next").addEventListener("click",nextmonth);
   }
   function showdate(colno) {
-    var textbox = document.getElementById("selectdate");
-    textbox.value = date.getFullYear() + "," + months[date.getMonth()] + "," + colno;
+    document.getElementById(colno).onclick = function() {
+      var textbox = document.getElementById("selectdate");
+      textbox.value = date.getFullYear() + "," + months[date.getMonth()] + "," + colno;
+    };
   }
 });
